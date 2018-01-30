@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -86,9 +85,6 @@ public class DataJson {
 		JSONArray hit = hits.getJSONArray("hit");
 		System.out.println(hit.length());
 		System.out.println(hit.getJSONObject(0).getString("@id"));
-		// JSONObject info = hit.getJSONObject(1).getJSONObject("info");
-		// String title = info.getString("title");
-		// System.out.println(title);
 		ArrayList<String> motclé = new ArrayList<String>();
 		for (int i = 0; i < matrix.length; i++) {
 			JSONObject info = hit.getJSONObject(i).getJSONObject("info");
@@ -213,12 +209,6 @@ public class DataJson {
 		String Json = "{\"nodes\": [";
 
 		System.out.println(group.toString());
-		/*
-		 * for(int i = 0; i<matrix.length; i++){ JSONObject info =
-		 * hit.getJSONObject(i).getJSONObject("info"); String title =
-		 * info.getString("title"); title=title.replace(".", ""); Json+= "{\"id\": \"" +
-		 * title+"\", \"group\":" + group.get(title)+"},"; Json +="\n"; }
-		 */
 
 		for (String key : group.keySet()) {
 			Json += "{\"id\": \"" + key + "\", \"group\":" + group.get(key) + "},";
@@ -228,17 +218,7 @@ public class DataJson {
 		Json += "],\"links\":[";
 		System.out.println(Json);
 		System.out.println(elementJsonGroup.toString());
-		/*
-		 * for(int i = 0; i<matrix.length;i++){ for (int j=i+1;j<matrix[i].length;j++){
-		 * if(elementJsonGroup.contains(i) && elementJsonGroup.contains(j)){ JSONObject
-		 * info = hit.getJSONObject(i).getJSONObject("info"); String titlei =
-		 * info.getString("title"); titlei=titlei.replace(".", ""); JSONObject infoj =
-		 * hit.getJSONObject(j).getJSONObject("info"); String titlej =
-		 * infoj.getString("title"); titlej=titlej.replace(".", ""); Json
-		 * +="{\"source\": \""+ titlei
-		 * +"\", \"target\": \""+titlej+"\", \"value\": "+matrix[i][j]+"},"; Json
-		 * +="\n"; } } }
-		 */
+
 		for (int articlei : elementJsonGroup) {
 			for (int articlej : elementJsonGroup) {
 				if (articlei != articlej) {
@@ -250,7 +230,6 @@ public class DataJson {
 					String titlej = infoj.getString("title");
 					titlej = titlej.replace(".", "");
 					if (matrix[articlei][articlej] != 0) {
-						//System.out.println("i:" + articlei + ", j:" + articlej);
 						Json += "{\"source\": \"" + titlei + "\", \"target\": \"" + titlej + "\", \"value\": "
 								+ matrix[articlei][articlej] + "},";
 						Json += "\n";

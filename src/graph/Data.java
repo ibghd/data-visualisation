@@ -3,21 +3,17 @@ package graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Data{
-	private String[] data;
+public class Data {
 
-	public Data(String[] data) {
-		this.data = data;
-	}
 
 	public static HashMap<String, Integer> ratio(ArrayList<String> A) {
 		HashMap<String, Integer> M = new HashMap<>();
 		for (int i = 0; i < A.size(); i++) {
-			if(!M.containsKey(A.get(i))) {
+			if (!M.containsKey(A.get(i))) {
 				M.put(A.get(i), 1);
-				for(int j = 0; j < A.size() && j != i; j++) {
-					if(A.get(j).equalsIgnoreCase(A.get(i))) {
-						M.put(A.get(i), M.get(A.get(i))+1);
+				for (int j = 0; j < A.size() && j != i; j++) {
+					if (A.get(j).equalsIgnoreCase(A.get(i))) {
+						M.put(A.get(i), M.get(A.get(i)) + 1);
 					}
 				}
 			}
@@ -370,18 +366,11 @@ public class Data{
 				"embedded applications", "security protocols",
 				"[INFO.INFO-NI] Computer Science [cs]/Networking and Internet Architecture [cs.NI]", "group signatures",
 				"verifier-local revocation", "lattice-based cryptography",
-				"[INFO.INFO-CR] Computer Science [cs]/Cryptography and Security [cs.CR]"};
+				"[INFO.INFO-CR] Computer Science [cs]/Cryptography and Security [cs.CR]" };
 		System.out.println(d.length);
 		ArrayList<String> A = new ArrayList<String>();
+
 		for (String keyword : d) {
-			/*
-			 * keyword.replaceAll("[INFO]", ""); keyword.replaceAll("[cs]", "");
-			 * keyword.replaceAll("[INFO.INFO-CR]", ""); keyword.replaceAll("/",
-			 * " "); keyword.replaceAll("[SHS.INFO]", "");
-			 * keyword.replaceAll("[INFO.INFO-AR]", "");
-			 * keyword.replaceAll("[cs.CR]","");
-			 * keyword.replaceAll("[PHYS.QPHY]","");
-			 */
 			keyword.replaceAll("Crytopgraphy", "");
 			keyword.replaceAll("Crytopgraphie", "");
 			keyword.replaceAll("cryptography", "");
@@ -391,12 +380,10 @@ public class Data{
 				A.add(keyword);
 			}
 		}
-		/*for (String keyword : A) {
-			System.out.println(keyword);
-		}*/
-		HashMap<String,Integer> map = Data.ratio(A);
-		for (String key: map.keySet()){
-			System.out.println("key:" + key +";"+ "value:"+ map.get(key));
+
+		HashMap<String, Integer> map = Data.ratio(A);
+		for (String key : map.keySet()) {
+			System.out.println("key:" + key + ";" + "value:" + map.get(key));
 		}
 	}
 }

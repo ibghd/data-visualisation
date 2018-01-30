@@ -16,7 +16,7 @@ public class DBLPContentHandler extends DefaultHandler {
 	private HashMap<String, ArrayList<String>> data;
 	private String keyword;
 	private FileOutputStream outputStream;
-	
+
 	public DBLPContentHandler(String keyword, FileOutputStream outputStream) {
 		super();
 		this.depth = 0;
@@ -31,7 +31,6 @@ public class DBLPContentHandler extends DefaultHandler {
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		// TODO Auto-generated method stub
 		super.characters(ch, start, length);
 		String info = String.valueOf(ch, start, length);
 		if (!data.equals("\n")) {
@@ -40,9 +39,9 @@ public class DBLPContentHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void startElement(String uri, String localName, String qualifiedName,
-			Attributes attributes) throws SAXException {
-		// TODO Auto-generated method stub
+	public void startElement(String uri, String localName, String qualifiedName, Attributes attributes)
+			throws SAXException {
+
 		super.startElement(uri, localName, qualifiedName, attributes);
 		depth += 1;
 		if (depth == 5) {
@@ -52,46 +51,27 @@ public class DBLPContentHandler extends DefaultHandler {
 			data.put("dc:source", new ArrayList<String>());
 			data.put("dc:subject", new ArrayList<String>());
 		}
-        if (depth >= 6) {
-        	content = "";
-        }
+		if (depth >= 6) {
+			content = "";
+		}
 	}
 
 	@Override
-	public void endElement(String uri, String localName, String qualifiedName)
-			throws SAXException {
-		// TODO Auto-generated method stub
+	public void endElement(String uri, String localName, String qualifiedName) throws SAXException {
+
 		super.endElement(uri, localName, qualifiedName);
 		if (depth == 5) {
 			String line = "";
-			int authorsCount = 0;
-			String authorsNames = "";
-			String date = "";
-			/*for (String title : data.get("dc:title")) {
-				line += title;
-			}*/
-			/*for (String creator : data.get("dc:creator")) {
-				line += ","+ creator;
-			}
-			for (String source : data.get("dc:source")) {
-				line += ","+source;
-			}*/
+
 			for (String source : data.get("dc:subject")) {
-				line +=  "\""+source+"\"" + ",";
+				line += "\"" + source + "\"" + ",";
 			}
-			/*for (String author : data.get("author")) {
-				authorsCount += 1;
-				authorsNames += "\t" + author;
-			}
-			for (String year : data.get("year")) {
-				date = year;
-			}*/
+			
 			if (line.contains(keyword)) {
-				line +="\n";
+				line += "\n";
 				try {
 					outputStream.write(line.getBytes("UTF-8"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -102,6 +82,6 @@ public class DBLPContentHandler extends DefaultHandler {
 			}
 		}
 		depth -= 1;
-	}	
-	
+	}
+
 }
